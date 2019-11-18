@@ -18,5 +18,9 @@
     {
         "subject": "you won the lottery",
         "body": "Esse occaecat voluptate non et et ut aliqua."
+    },
+    {
+        "subject": "Is Automatic Serialization Working?",
+        "body": "Esse occaecat voluptate non et et ut aliqua."
     }
 ]
