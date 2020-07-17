@@ -9,7 +9,7 @@ class EmailApp extends StatelessWidget {
     return MaterialApp(
       title: 'Email App',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.indigo,
         accentColor: Colors.red
       ),
       home: App(),
