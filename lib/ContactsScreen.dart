@@ -16,6 +16,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
   @override
   Widget build(BuildContext context) {
     ContactManager manager = Provider.of(context).fetch(ContactManager);
+    
+    manager.inFilter.add('');
 
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +38,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
       ),
       drawer: AppDrawer(),
       body: ContactListBuilder(
-        stream: manager.browse$(),
+        stream: manager.browse$,
         builder: (context, contacts) {
           return ListView.separated(
               itemBuilder: (context, index) {
