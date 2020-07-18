@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'AppDrawer.dart';
+import 'ContactListBuilder.dart';
 import 'ContactManager.dart';
+import 'ContactsSearchDelegate.dart';
 import 'model/Contact.dart';
 
 class ContactsScreen extends StatefulWidget {
@@ -9,7 +11,7 @@ class ContactsScreen extends StatefulWidget {
 }
 
 class _ContactsScreenState extends State<ContactsScreen> {
-  ContactManager manager = ContactManager();
+  final ContactManager manager = ContactManager();
 
   @override
   Widget build(BuildContext context) {
@@ -32,37 +34,36 @@ class _ContactsScreenState extends State<ContactsScreen> {
             ),
             backgroundColor: Colors.red,
           ),
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () => showSearch(
+                context: context,
+                delegate: ContactsSearchDelegate(manager: manager)
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(right: 16),
           )
         ],
       ),
       drawer: AppDrawer(),
-      body: StreamBuilder<List<Contact>>(
-      stream: manager.contactListNow,
-      // ignore: missing_return
-      builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.none:
-          case ConnectionState.waiting:
-          case ConnectionState.active:
-            return Center(child: CircularProgressIndicator());
-          case ConnectionState.done:
-            List<Contact> contacts = snapshot.data;
-            return ListView.separated(
-                itemBuilder: (context, index) {
-                  Contact _contact = contacts[index];
+      body: ContactListBuilder(
+        stream: manager.contactListView,
+        builder: (context, contacts) {
+          return ListView.separated(
+              itemBuilder: (context, index) {
+                Contact _contact = contacts[index];
 
-                  return ListTile(
-                    title: Text(_contact.name),
-                    subtitle: Text(_contact.email),
-                  );
-                },
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: contacts.length ?? 0
-            );
-        }
-      },
+                return ListTile(
+                  title: Text(_contact.name),
+                  subtitle: Text(_contact.email),
+                  leading: CircleAvatar(),
+                );
+              },
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: contacts.length ?? 0
+          );
+        },
       )
     );
   }

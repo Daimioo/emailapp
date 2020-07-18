@@ -1,13 +1,8 @@
 
-import 'package:emailapp/ComposeButton.dart';
 import 'package:emailapp/Message.dart';
-import 'package:emailapp/MessageCompose.dart';
 import 'package:emailapp/MessageDetail.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-// Get data from a file
-// import 'package:flutter/services.dart';
 
 class MessageList extends StatefulWidget {
   final String title;
