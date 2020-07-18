@@ -6,7 +6,7 @@ import 'package:emailapp/service/ContactService.dart';
 
 class ContactManager {
   final PublishSubject<String> _filterSubject = PublishSubject<String>();
-  final BehaviorSubject<int> _countSubject = BehaviorSubject<int>();
+  final PublishSubject<int> _countSubject = PublishSubject<int>();
   final PublishSubject<List<Contact>> _collectionSubject = PublishSubject();
 
   Sink<String> get inFilter => _filterSubject.sink;
@@ -15,7 +15,7 @@ class ContactManager {
   Stream<List<Contact>> get browse$ => _collectionSubject.stream;
 
   ContactManager() {
-    _filterSubject.stream.listen((query) async {
+    _filterSubject.listen((query) async {
       var contacts = await ContactService.browse(query: query);
       _collectionSubject.add(contacts);
     });
