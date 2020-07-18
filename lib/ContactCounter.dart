@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'ContactManager.dart';
-import 'Overseer.dart';
 import 'Provider.dart';
 
 class ContactCounter extends StatelessWidget {
@@ -11,7 +10,7 @@ class ContactCounter extends StatelessWidget {
 
     return Chip(
       label: StreamBuilder<int>(
-          stream: manager.contactCounter,
+          stream: manager.count$,
           builder: (context, snapshot) {
             return Text(
                 (snapshot.data ?? 0).toString(),

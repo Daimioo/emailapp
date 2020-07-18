@@ -4,7 +4,6 @@ import 'ContactCounter.dart';
 import 'ContactListBuilder.dart';
 import 'ContactManager.dart';
 import 'ContactsSearchDelegate.dart';
-import 'Overseer.dart';
 import 'Provider.dart';
 import 'model/Contact.dart';
 
@@ -37,7 +36,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
       ),
       drawer: AppDrawer(),
       body: ContactListBuilder(
-        stream: manager.contactListView,
+        stream: manager.browse$(),
         builder: (context, contacts) {
           return ListView.separated(
               itemBuilder: (context, index) {
