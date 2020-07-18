@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'AppDrawer.dart';
 import 'ContactManager.dart';
+import 'model/Contact.dart';
 
-class ContactsScreen extends StatelessWidget {
+class ContactsScreen extends StatefulWidget {
+  @override
+  _ContactsScreenState createState() => _ContactsScreenState();
+}
+
+class _ContactsScreenState extends State<ContactsScreen> {
   ContactManager manager = ContactManager();
 
   @override
@@ -10,7 +16,7 @@ class ContactsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Contacts"),
-        actions: [
+        actions: <Widget>[
           Chip(
             label: StreamBuilder<int>(
               stream: manager.contactCounter,
@@ -32,20 +38,32 @@ class ContactsScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: StreamBuilder<List<String>>(
+      body: StreamBuilder<List<Contact>>(
       stream: manager.contactListNow,
-      builder: (context, snapshot) {
-        List<String> contacts = snapshot.data;
-        return  ListView.separated(
-            itemBuilder: (context, index) {
-              return ListTile(
-                  title: Text(contacts[index]),
-              );
-            },
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: contacts.length ?? 0
-        );
-      })
+      // ignore: missing_return
+      builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.waiting:
+          case ConnectionState.active:
+            return Center(child: CircularProgressIndicator());
+          case ConnectionState.done:
+            List<Contact> contacts = snapshot.data;
+            return ListView.separated(
+                itemBuilder: (context, index) {
+                  Contact _contact = contacts[index];
+
+                  return ListTile(
+                    title: Text(_contact.name),
+                    subtitle: Text(_contact.email),
+                  );
+                },
+                separatorBuilder: (context, index) => Divider(),
+                itemCount: contacts.length ?? 0
+            );
+        }
+      },
+      )
     );
   }
 }
