@@ -13,6 +13,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
   );
 }
 
+// ignore: unused_element
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'subject': instance.subject,
       'body': instance.body,
