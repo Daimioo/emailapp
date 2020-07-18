@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'ContactManager.dart';
+import 'Overseer.dart';
 import 'Provider.dart';
 
 class ContactCounter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ContactManager manager = Provider.of<ContactManager>(context);
+    ContactManager manager = Provider.of(context).fetch(ContactManager);
 
     return Chip(
       label: StreamBuilder<int>(

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'AppDrawer.dart';
 import 'ContactCounter.dart';
 import 'ContactListBuilder.dart';
+import 'ContactManager.dart';
 import 'ContactsSearchDelegate.dart';
+import 'Overseer.dart';
+import 'Provider.dart';
 import 'model/Contact.dart';
 
 class ContactsScreen extends StatefulWidget {
@@ -13,6 +16,8 @@ class ContactsScreen extends StatefulWidget {
 class _ContactsScreenState extends State<ContactsScreen> {
   @override
   Widget build(BuildContext context) {
+    ContactManager manager = Provider.of(context).fetch(ContactManager);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Contacts"),
@@ -32,6 +37,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
       ),
       drawer: AppDrawer(),
       body: ContactListBuilder(
+        stream: manager.contactListView,
         builder: (context, contacts) {
           return ListView.separated(
               itemBuilder: (context, index) {

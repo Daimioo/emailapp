@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'ContactManager.dart';
+import 'Overseer.dart';
 
-class Provider<T> extends InheritedWidget {
-  final T data;
+class Provider extends InheritedWidget {
+  final Overseer data;
 
   Provider({Key key, Widget child, this.data}) : super(key: key, child: child);
 
-  static T of<T>(BuildContext context) {
-    return (context.dependOnInheritedWidgetOfExactType<Provider<T>>()).data;
+  static Overseer of(BuildContext context) {
+    return (context.dependOnInheritedWidgetOfExactType<Provider>()).data;
   }
 
   @override
