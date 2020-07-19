@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sprinkle/Observer.dart';
+import 'package:sprinkle/SprinkleExtension.dart';
 
 import 'ContactManager.dart';
-import 'Observer.dart';
-import 'Provider.dart';
 
 class ContactCounter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ContactManager manager = Provider.of(context).fetch(ContactManager);
+    ContactManager manager = context.fetch<ContactManager>();
+
 
     return Chip(
       label: Observer<int>(

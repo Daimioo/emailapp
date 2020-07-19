@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'ContactListBuilder.dart';
 import 'ContactManager.dart';
-import 'Provider.dart';
 import 'model/Contact.dart';
+import 'package:sprinkle/SprinkleExtension.dart';
 
 class ContactsSearchDelegate extends SearchDelegate {
   @override
@@ -34,7 +34,7 @@ class ContactsSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    ContactManager manager = Provider.of(context).fetch(ContactManager);
+    ContactManager manager = context.fetch<ContactManager>();
 
     manager.inFilter.add(query);
 

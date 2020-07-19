@@ -4,8 +4,8 @@ import 'ContactCounter.dart';
 import 'ContactListBuilder.dart';
 import 'ContactManager.dart';
 import 'ContactsSearchDelegate.dart';
-import 'Provider.dart';
 import 'model/Contact.dart';
+import 'package:sprinkle/SprinkleExtension.dart';
 
 class ContactsScreen extends StatefulWidget {
   @override
@@ -15,8 +15,8 @@ class ContactsScreen extends StatefulWidget {
 class _ContactsScreenState extends State<ContactsScreen> {
   @override
   Widget build(BuildContext context) {
-    ContactManager manager = Provider.of(context).fetch(ContactManager);
-    
+    ContactManager manager = context.fetch<ContactManager>();
+
     manager.inFilter.add('');
 
     return Scaffold(

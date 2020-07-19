@@ -3,8 +3,9 @@ import 'package:rxdart/rxdart.dart';
 
 import 'model/Contact.dart';
 import 'package:emailapp/service/ContactService.dart';
+import 'package:sprinkle/Manager.dart';
 
-class ContactManager {
+class ContactManager implements Manager {
   final PublishSubject<String> _filterSubject = PublishSubject<String>();
   final PublishSubject<int> _countSubject = PublishSubject<int>();
   final PublishSubject<List<Contact>> _collectionSubject = PublishSubject();

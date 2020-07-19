@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Observer.dart';
+import 'package:sprinkle/Observer.dart';
 import 'model/Contact.dart';
 
 class ContactListBuilder extends StatelessWidget {

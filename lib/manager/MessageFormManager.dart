@@ -2,8 +2,9 @@ import 'package:rxdart/rxdart.dart';
 
 import '../Message.dart';
 import 'Validation.dart';
+import 'package:sprinkle/Manager.dart';
 
-class MessageFormManager with Validation {
+class MessageFormManager with Validation implements Manager {
   final _email = BehaviorSubject<String>();
   Stream<String> get email$ => _email.stream.transform(validateEmail);
   Sink<String> get inEmail => _email.sink;
