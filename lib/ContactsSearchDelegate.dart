@@ -36,13 +36,6 @@ class ContactsSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     ContactManager manager = Provider.of(context).fetch(ContactManager);
 
-
-    if (query.length < 3 ) {
-      return Center(
-        child: Text("Type more than 3 letters to search."),
-      );
-    }
-
     manager.inFilter.add(query);
 
     return ContactListBuilder(

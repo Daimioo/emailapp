@@ -15,7 +15,7 @@ class ContactManager {
   Stream<List<Contact>> get browse$ => _collectionSubject.stream;
 
   ContactManager() {
-    _filterSubject.listen((query) async {
+    _filterSubject.debounceTime(Duration(milliseconds: 500)).listen((query) async {
       var contacts = await ContactService.browse(query: query);
       _collectionSubject.add(contacts);
     });
