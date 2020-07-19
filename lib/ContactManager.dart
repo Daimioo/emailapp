@@ -15,10 +15,14 @@ class ContactManager {
   Stream<List<Contact>> get browse$ => _collectionSubject.stream;
 
   ContactManager() {
-    _filterSubject.debounceTime(Duration(milliseconds: 500)).listen((query) async {
-      var contacts = await ContactService.browse(query: query);
-      _collectionSubject.add(contacts);
-    });
+    _filterSubject
+        .debounceTime(Duration(milliseconds: 500))
+        .switchMap((query) async* {
+          yield await ContactService.browse(query: query);
+        })
+        .listen((contacts) async {
+          _collectionSubject.add(contacts);
+        });
 
     _collectionSubject.listen((list) => _countSubject.add(list.length));
   }
@@ -27,4 +31,3 @@ class ContactManager {
     _countSubject.close();
     _filterSubject.close();
   }
-}
