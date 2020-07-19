@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'Provider.dart';
+import 'RxTextField.dart';
 import 'manager/MessageFormManager.dart';
 
-class MessageCompose extends StatefulWidget {
-  @override
-  _MessageComposeState createState() => _MessageComposeState();
-}
-
-class _MessageComposeState extends State<MessageCompose> {
+class MessageCompose extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MessageFormManager manager = Provider.of(context).fetch(MessageFormManager);
@@ -23,39 +19,29 @@ class _MessageComposeState extends State<MessageCompose> {
           child: Column(
               children: <Widget>[
                 ListTile(
-                  title: StreamBuilder<String>(
-                    stream: manager.email$,
-                    builder: (context, snapshot) {
-                      return TextField(
-                        onChanged: manager.inEmail.add,
+                  title: RxTextField(
+                        subscribe: manager.email$,
+                        dispatch: manager.setEmail,
                         decoration: InputDecoration(
                           labelText: 'TO',
                           labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                          errorText: snapshot.error
                         ),
-                      );
-                    },
+                      ),
                   ),
-                ),
                 ListTile(
-                  title: StreamBuilder<String>(
-                    stream: manager.subject$,
-                    builder: (context, snapshot) {
-                      return TextField(
-                        onChanged: manager.inSubject.add,
+                  title: RxTextField(
+                        subscribe: manager.subject$,
+                        dispatch: manager.setSubject,
                         decoration: InputDecoration(
                           labelText: 'SUBJECT',
                           labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                          errorText: snapshot.error
                         ),
-                      );
-                    }
-                  ),
+                      ),
                 ),
                 Divider(),
                 ListTile(
-                  title: TextField(
-                    onChanged: manager.inBody.add,
+                  title: RxTextField(
+                    dispatch: manager.setBody,
                     decoration: InputDecoration(
                       labelText: 'BODY',
                       labelStyle: TextStyle(fontWeight: FontWeight.bold),
