@@ -11,18 +11,19 @@ class ContactManager {
 
   Sink<String> get inFilter => _filterSubject.sink;
 
-  Stream<int> get count$  => _countSubject.stream;
+  Stream<int> get count$ => _countSubject.stream;
+
   Stream<List<Contact>> get browse$ => _collectionSubject.stream;
 
   ContactManager() {
     _filterSubject
         .debounceTime(Duration(milliseconds: 500))
         .switchMap((query) async* {
-          yield await ContactService.browse(query: query);
-        })
+      yield await ContactService.browse(query: query);
+    })
         .listen((contacts) async {
-          _collectionSubject.add(contacts);
-        });
+      _collectionSubject.add(contacts);
+    });
 
     _collectionSubject.listen((list) => _countSubject.add(list.length));
   }
@@ -31,3 +32,4 @@ class ContactManager {
     _countSubject.close();
     _filterSubject.close();
   }
+}
